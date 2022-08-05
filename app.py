@@ -1,7 +1,8 @@
 import sqlite3
-from flask import Flask, render_template, request, g, flash
+from flask import Flask, render_template, redirect, g, flash, request, url_for
 import os
 from FDataBase import FDataBase
+
 
 #database settings
 DATABASE = '/tmp/app.db'
@@ -45,7 +46,53 @@ def create_db():
 def index():
     db = get_bd()
     dbase = FDataBase(db)
-    return render_template('index.html', tasks=dbase.get_tasks())
+    uncompleted_tasks = db.cursor().execute('''SELECT * FROM tasks WHERE is_done=0''').fetchall()
+    completed_tasks = db.cursor().execute('''SELECT * FROM tasks WHERE is_done=1''').fetchall()
+    return render_template('index.html', uncompleted_tasks=uncompleted_tasks, completed_tasks=completed_tasks)
+
+
+@app.route("/add_task", methods=['POST', 'GET'])
+def add_task():
+    db = get_bd()
+    dbase = FDataBase(db)
+    if request.method == 'POST':
+        db.cursor().execute("INSERT INTO tasks VALUES(NULL, ?, ?, 0)", (request.form['title'], request.form['info']))
+        db.commit()
+        flash('Task was successfully added!')
+    return render_template('add_task.html')
+
+
+@app.route('/make_complete/<id>')
+def make_complete(id):
+    db = get_bd()
+    dbase = FDataBase(db)
+    db.cursor().execute(f"UPDATE tasks SET is_done = 1 WHERE id = {id}")
+    db.commit()
+    uncompleted_tasks = db.cursor().execute('''SELECT * FROM tasks WHERE is_done=0''').fetchall()
+    completed_tasks = db.cursor().execute('''SELECT * FROM tasks WHERE is_done=1''').fetchall()
+    return redirect(url_for('index'))
+
+
+@app.route("/delete_task/<id>")
+def delete_task(id):
+    db = get_bd()
+    db.cursor().execute(f"DELETE FROM tasks WHERE id = {id}")
+    db.commit()
+    dbase = FDataBase(db)
+    uncompleted_tasks = db.cursor().execute('''SELECT * FROM tasks WHERE is_done=0''').fetchall()
+    completed_tasks = db.cursor().execute('''SELECT * FROM tasks WHERE is_done=1''').fetchall()
+    return render_template('index.html', uncompleted_tasks=uncompleted_tasks, completed_tasks=completed_tasks)
+
+
+@app.route("/delete_all")
+def delete_all():
+    db = get_bd()
+    db.cursor().execute("DELETE FROM tasks")
+    dbase = FDataBase(db)
+    db.commit()
+    uncompleted_tasks = db.cursor().execute('''SELECT * FROM tasks WHERE is_done=0''').fetchall()
+    completed_tasks = db.cursor().execute('''SELECT * FROM tasks WHERE is_done=1''').fetchall()
+    return render_template('index.html', uncompleted_tasks=uncompleted_tasks, completed_tasks=completed_tasks)
 
 
 if __name__ == '__main__':

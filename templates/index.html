@@ -1,12 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for task in tasks %}
-<div class="text-center">
-    <p>
-    <h3> {{ task.title }} </h3>
-    </p>
+{% if uncompleted_tasks %}
+<center><h3>Tasks to do</h3></center>
+{% for task in uncompleted_tasks %}
+<div class="container">
+    <ul class="list-group" style="margin:30px;">
+        <li class="list-group-item">
+            <p><a href="{{ url_for('make_complete', id=task.id) }}" type="button" class="btn btn-dark">Mark as
+                completed</a></p>
+            <label class="form-check-label" for="firstCheckbox"><h5>{{ task.title }}</h5></label>
+            <p>{{ task.info }}</p>
+            <a href="{{ url_for('delete_task', id=task.id) }}"><i class="fa fa-trash" style="color:black;"></i></a>
+        </li>
+    </ul>
 </div>
-
 {% endfor %}
+{% endif %}
+{% if completed_tasks %}
+<center><h3>Completed tasks</h3></center>
+{% for task in completed_tasks %}
+<div class="container">
+    <ul class="list-group" style="margin:30px;">
+        <li class="list-group-item">
+            <label class="form-check-label" for="firstCheckbox"><h5>{{ task.title }}</h5></label>
+            <p>{{ task.info }}</p>
+            <a href="{{ url_for('delete_task', id=task.id) }}"><i class="fa fa-trash" style="color:black;"></i></a>
+        </li>
+    </ul>
+</div>
+{% endfor %}
+{% else %}
+<center><h3>There are no completed tasks...</h3></center>
+{% endif %}
+{% if completed_tasks or uncompleted_tasks %}
+<center><a href="{{ url_for('delete_all') }}">
+    <button type="button" class="btn btn-dark">Delete all tasks</button>
+</a></center>
+{% endif %}
 {% endblock %}
