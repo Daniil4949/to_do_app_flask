@@ -2,6 +2,7 @@
 
 {% block content %}
 {{ super() }}
+<!--Form mistakes are here-->
 {% for message in get_flashed_messages() %}
 <div class="row">
     <center><p style="color:green;"> {{ message }} </p></center>
@@ -13,10 +14,12 @@
         <form action="#" method="post" class="form" style="margin:40px;">
             <div class="mb-3">
                 <label class="form-label">Title</label>
+                <!-- Name of the task-->
                 <input type="text" name="title" class="form-control" id="text" aria-describedby="emailHelp">
 
             </div>
             <div class="mb-3">
+                <!-- Info for task -->
                 <label class="form-label">Info for task</label>
                 <textarea class="form-control" name="info" id="message"></textarea>
 

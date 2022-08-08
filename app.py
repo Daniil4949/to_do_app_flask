@@ -4,7 +4,7 @@ import os
 from FDataBase import FDataBase
 
 
-#database settings
+"""Database settings"""
 DATABASE = '/tmp/app.db'
 DEBUG = True
 SECRET_KEY = 'vHWIERF73480GWEEFPsihbd!2432r3784hfrvb'
