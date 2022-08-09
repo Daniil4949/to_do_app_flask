@@ -6,15 +6,17 @@
 <!--All uncompleted tasks-->
 {% for task in uncompleted_tasks %}
 <div class="container">
-    <ul class="list-group" style="margin:30px;">
-        <li class="list-group-item">
-            <p><a href="{{ url_for('make_complete', id=task.id) }}" type="button" class="btn btn-dark">Mark as
-                completed</a></p>
-            <label class="form-check-label" for="firstCheckbox"><h5>{{ task.title }}</h5></label>
-            <p>{{ task.info }}</p>
-            <a href="{{ url_for('delete_task', id=task.id) }}"><i class="fa fa-trash" style="color:black;"></i></a>
-        </li>
-    </ul>
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <ul class="list-group" style="margin:30px;">
+            <li class="list-group-item">
+                <p><a href="{{ url_for('make_complete', id=task.id) }}" type="button" class="btn btn-dark">Mark as
+                    completed</a></p>
+                <label class="form-check-label" for="firstCheckbox"><h5>{{ task.title }}</h5></label>
+                <p>{{ task.info }}</p>
+                <a href="{{ url_for('delete_task', id=task.id) }}"><i class="fa fa-trash" style="color:black;"></i></a>
+            </li>
+        </ul>
+    </div>
 </div>
 {% endfor %}
 {% endif %}
@@ -23,13 +25,16 @@
 <center><h3>Completed tasks</h3></center>
 {% for task in completed_tasks %}
 <div class="container">
-    <ul class="list-group" style="margin:30px;">
-        <li class="list-group-item">
-            <label class="form-check-label" for="firstCheckbox"><h5>{{ task.title }}</h5></label>
-            <p>{{ task.info }}</p>
-            <a href="{{ url_for('delete_task', id=task.id) }}"><i class="fa fa-trash" style="color:black;"></i></a>
-        </li>
-    </ul>
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <ul class="list-group" style="margin:30px;">
+
+            <li class="list-group-item">
+                <label class="form-check-label" for="firstCheckbox"><h5>{{ task.title }}</h5></label>
+                <p>{{ task.info }}</p>
+                <a href="{{ url_for('delete_task', id=task.id) }}"><i class="fa fa-trash" style="color:black;"></i></a>
+            </li>
+        </ul>
+    </div>
 </div>
 {% endfor %}
 {% else %}
