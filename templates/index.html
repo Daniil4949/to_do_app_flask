@@ -11,7 +11,7 @@
             <li class="list-group-item">
                 <p><a href="{{ url_for('make_complete', id=task.id) }}" type="button" class="btn btn-dark">Mark as
                     completed</a></p>
-                <label class="form-check-label" for="firstCheckbox"><h5>{{ task.title }}</h5></label>
+                <label class="form-check-label"><h5>{{ task.title }}</h5></label>
                 <p>{{ task.info }}</p>
                 <a href="{{ url_for('delete_task', id=task.id) }}"><i class="fa fa-trash" style="color:black;"></i></a>
             </li>
@@ -29,7 +29,7 @@
         <ul class="list-group" style="margin:30px;">
 
             <li class="list-group-item">
-                <label class="form-check-label" for="firstCheckbox"><h5>{{ task.title }}</h5></label>
+                <label class="form-check-label"><h5>{{ task.title }}</h5></label>
                 <p>{{ task.info }}</p>
                 <a href="{{ url_for('delete_task', id=task.id) }}"><i class="fa fa-trash" style="color:black;"></i></a>
             </li>
