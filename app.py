@@ -3,6 +3,13 @@ from flask import Flask, render_template, redirect, g, flash, request, url_for
 import os
 from FDataBase import FDataBase
 
+"""
+    app.py - main file ot todo application on Flask. Main view functions are represented here. 
+    Also database settings are in the file. There are db_connect function for SQLite, 
+    create_db() (you can use it in python console), this function based on sq_db.sql.
+    Also you can change it for your needs.
+"""
+
 
 """Database settings"""
 DATABASE = '/tmp/app.db'
