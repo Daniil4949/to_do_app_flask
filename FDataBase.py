@@ -1,6 +1,13 @@
 import sqlite3
 
 
+"""
+    This additional file was created to make operations with database easier. All the methods 
+    are necessary for my project. I also think that it is much effective to created additional 
+    file (it is something like library), instead of creating this class in app.py.
+"""
+
+
 class FDataBase:
     def __init__(self, db):
         self.__db = db
